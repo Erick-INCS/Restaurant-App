@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/fontawesome-all.min.css">
+    <title>Login</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <div id="login" class="w-50 mx-auto">
+            <h4 class="text-primary">Login</h4>
+
+            <form class="mt-5 text-center">
+                <div class="form-group row">
+                    <i class="fa fa-user col-3 fa-2x text-muted"></i>
+                    <input type="text" class="form-control col-9" name="usr" id="usr" placeholder="No. empleado">
+                </div>
+                <div class="form-group row">
+                    <i class="fa fa-key col-3 fa-2x text-muted"></i>
+                    <input type="password" class="form-control col-9" name="pass" id="pass" placeholder="Contraseña">
+                </div>
+                <input type="button" value="Iniciar" id="btnIniciar" class="btn btn-primary mt-3">
+                <input type="button" value="Salir" id="btnSalir" class="btn btn-secondary mt-3">
+            </form>
+        </div>
+    </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+            
+                <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                    <p id="modalContent"></p>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                    </div>
+                </div>
+                </div>
+    
+            </div>
+            <button type="button" id="btnShowModal" class="d-none" data-toggle="modal" data-target="#modal"></button>
+
+
+    <script src="../js/jquery-3.4.1.min.js"></script>
+    <script>
+
+        var conn,
+            menu,
+            set;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            $('input#btnIniciar').click(async() => {
+
+                let usr = $('#usr')[0].value.trim(),
+                    pass = $('#pass')[0].value.trim();
+
+                if (usr.length > 0 && pass.length > 0) {
+                    conn.connect();
+                    
+                    conn.query(`SELECT id, ut_id, name from users where id = ${usr} and password = md5('${pass}');`, (err, res) => {
+                        if (err) alert(err);
+                        if (res.length > 0) {
+                            
+                            menu();
+                            set(res[0]);
+                            window.close();
+                            conn.end();
+
+                        } else {
+                            new window.Notification('Datos incorrectos');
+                        }
+                    });
+                }
+            });
+            
+            $('#btnSalir').click(() => {
+                window.close();
+            });
+        });
+        
+        function showModal(title, content) {
+            $('#modalTitle')[0].innerText = title;
+            $('#modalContent')[0].innerHTML = content;
+            $('#btnShowModal').click();
+        }
+        </script>
+</body>
+
+</html>

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/fontawesome-all.min.css">
+    <link href="../css/theme.css" rel="stylesheet" media="all">
+
+    <title>Restaurant</title>
+    <!-- Jquery JS-->
+    <script src="../vendor/jquery-3.2.1.min.js"></script>
+    
+    <!-- vendor -->
+    <!-- <link href="../vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
+    <link href="../vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
+    <link href="../vendor/wow/animate.css" rel="stylesheet" media="all">
+    <link href="../vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
+    <link href="../vendor/slick/slick.css" rel="stylesheet" media="all">
+    <link href="../vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="../vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all"> -->
+    <!-- Main CSS-->
+    <!-- <title>Document</title> -->
+    <script>
+    var G = 1;
+    </script>
+
+</head>
+
+<body>
+
+    <body class="animsition">
+        <div class="page-wrapper">
+
+            
+            <aside class="menu-sidebar d-none d-lg-block"><!-- MENU SIDEBAR-->
+
+                <div class="menu-sidebar__content js-scrollbar1">
+                    <nav class="navbar-sidebar">
+                        <ul class="list-unstyled navbar__list">
+                            <li class="active has-sub" id="liMesas">
+
+                                <a href="javascript: void(0);">
+                                    <i class="fas fa-utensils"></i>Mesas
+                                </a>
+                                <!--
+                                    li class js-arrow 
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                    <li>
+                                        <a href="index.html">Dashboard 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="index2.html">Dashboard 2</a>
+                                    </li>
+                                    <li>
+                                        <a href="index3.html">Dashboard 3</a>
+                                    </li>
+                                    <li>
+                                        <a href="index4.html">Dashboard 4</a>
+                                    </li>
+                                </ul> -->
+                            </li>
+                            <li id="liMenu">
+                                <a href="javascript: void(0);">
+                                    <i class="fas fa-book"></i>Menu
+                                </a>
+                            </li>
+                            <li id="liUsuarios">
+                                <a href="javascript: void(0);">
+                                    <i class="fas fa-user"></i>Usuarios
+                                </a>
+                            </li>
+                            <li id="liTrans">
+                                <a href="javascript: void(0);">
+                                    <i class="fas fa-money-bill-alt"></i>Transacciones
+                                </a>
+                            </li>
+                            
+                            
+                            <li>
+                                <a href="javascript: window.close();">
+                                    <i class="fas fa-sign-out-alt"></i>Salir
+                                </a>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+            </aside><!-- MENU SIDEBAR-->
+
+            <div class="page-container mt-0"><!-- PAGE CONTAINER-->
+                <div class="main-content pt-4" style="min-height: 92vh;">
+                    <div class="section__content section__content--p30" id="container">
+
+
+                        <div class="container-fluid container-element" id="mesas">
+
+                            <div class="row"><!-- title -->
+                                <div class="col-md-12">
+                                    <div class="overview-wrap">
+                                        <h2 class="title-1">Mesas</h2>
+                                    </div>
+                                </div>
+                            </div><!-- title -->
+
+                            <div class="au-card recent-report m-0 mt-2 py-0 pb-3">
+                                <div class="au-card-inner">
+                                        <div class="row mt-4">
+                                            <label for="selectedPlate" class="form-control-label col-5">Platillo seleccionado</label>
+                                            <select name="selectedPlate" id="selectedPlate" class="form-control col-7"></select>
+                                        </div>
+                                </div>
+                            </div>
+
+                            
+                            <div class="row mt-3" id="tables-container">
+                                
+                                
+                            </div>
+
+                            <button id="newTable" class="btn btn-primary"><i class="fa fa-plus"></i> &nbsp; Agregar mesa</button>
+                            <button id="deleteTable" class="btn btn-primary"><i class="fa fa-minus"></i> &nbsp; Eliminar mesa</button>
+
+                        </div>
+
+                        <div class="container-fluid container-element d-none" id="menu">
+
+                            <div class="row"><!-- title -->
+                                <div class="col-md-12">
+                                    <div class="overview-wrap">
+                                        <h2 class="title-1">Menu</h2>
+                                    </div>
+                                </div>
+                            </div><!-- title -->
+
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <!-- DATA TABLE-->
+                                    <div class="table-responsive m-b-40">
+                                        <table class="table table-borderless table-data3">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Nombre</th>
+                                                    <th>Descripcion</th>
+                                                    <th>Precio</th>
+                                                    <th></th>
+                                                    <!-- <th>Receta</th> -->
+                                                </tr>
+                                            </thead>
+                                            <tbody id="menuTable"></tbody>
+                                        </table>
+                                    </div>
+                                    <!-- END DATA TABLE-->
+                                </div>
+
+                                <div class="col-12" id="newPlatillo">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <strong>Nuevo</strong> Platillo
+                                        </div>
+                                        <div class="card-body card-block">
+                                            <form id="productForm" class="row needs-validation" action="javascript: submit('productForm');" novalidate>
+                                                <div class="form-group col-3">
+                                                    <label class="form-control-label" for="p_name">Nombre</label>
+                                                    <input type="text" class="form-control" name="p_name" id="p_name" placeholder="Nombre del platillo" required>
+                                                </div>
+
+                                                <div class="form-group col-3">
+                                                    <label class="form-control-label" for="p_unitPrice">Precio</label>
+                                                    <input type="number" class="form-control" min="0" name="p_unitPrice" id="p_unitPrice" placeholder="Precio" required>
+                                                </div>
+
+                                                <div class="form-group col-6">
+                                                    <label class="form-control-label" for="p_description">Descripcion</label>
+                                                    <input type="text" class="form-control" name="p_description" id="p_description" placeholder="Descripción corta">
+                                                </div>
+
+                                                <div class="form-group col-12">
+                                                    <label class="form-control-label" for="recipe">Receta</label>
+                                                    <textarea name="recipe" id="recipe" rows="5" placeholder="Receta..." class="form-control"></textarea>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                        <div class="card-footer">
+                                            <button type="submit" form="productForm" class="btn btn-primary btn-sm">
+                                                <i class="fa fa-check"></i> Crear
+                                            </button>
+                                            <button type="reset" id="btnClearP" onclick="clearP();" class="btn btn-danger btn-sm">
+                                                <i class="fa fa-ban"></i> Cancelar
+                                            </button>
+
+                                            <button type="button" id="btnShowModal" class="d-none" data-toggle="modal" data-target="#modal"></button>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="container-fluid container-element d-none" id="usuarios">
+
+                            <div class="row"><!-- title -->
+                                <div class="col-md-12">
+                                    <div class="overview-wrap">
+                                        <h2 class="title-1">Usuarios</h2>
+                                    </div>
+                                </div>
+                            </div><!-- title -->
+                            
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <!-- DATA TABLE-->
+                                    <div class="table-responsive m-b-40">
+                                        <table class="table table-borderless table-data3">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Nombre</th>
+                                                    <th>Tipo</th>
+                                                    <th></th>
+                                                    <!-- <th>Receta</th> -->
+                                                </tr>
+                                            </thead>
+                                            <tbody id="usersTable"></tbody>
+                                        </table>
+                                    </div>
+                                    <!-- END DATA TABLE-->
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <strong>Nuevo</strong> Usuario
+                                        </div>
+                                        <div class="card-body card-block">
+                                            <form id="usersForm" class="row needs-validation" action="javascript: submit('usersForm');" novalidate>
+                                                <div class="form-group col-3">
+                                                    <label class="form-control-label" for="id">Num. empleado</label>
+                                                    <input type="number" class="form-control" name="id" id="id" placeholder="No. empleado" required>
+                                                </div>
+
+                                                <div class="form-group col-3">
+                                                    <label class="form-control-label" for="name">Nombre</label>
+                                                    <input type="text" class="form-control" name="name" id="name" placeholder="Nombre" required>
+                                                </div>
+                                                
+                                                <div class="form-group col-3">
+                                                    <label class="form-control-label" for="password">Contraseña</label>
+                                                    <input type="password" class="form-control" name="password" id="password" required>
+                                                </div>
+                                                
+                                                <div class="form-group col-3">
+                                                    <label class="form-control-label" for="ut_id">Tipo</label>
+                                                    <select name="ut_id" id="ut_id" class="form-control">
+                                                        <option value="1">Empleado General</option>
+                                                        <option value="2" id="option2">Administrativo</option>
+                                                        <option value="3" id="option3">Gerencial</option>
+                                                    </select>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                        <div class="card-footer">
+                                            <button type="submit" form="usersForm" class="btn btn-primary btn-sm">
+                                                <i class="fa fa-check"></i> Crear
+                                            </button>
+                                            <button type="reset" id="clearU" onclick="clearUForm();" class="btn btn-danger btn-sm">
+                                                <i class="fa fa-ban"></i> Cancelar
+                                            </button>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="container-fluid container-element d-none" id="transactions">
+
+                                <div class="row"><!-- title -->
+                                    <div class="col-md-12">
+                                        <div class="overview-wrap">
+                                            <h2 class="title-1">Transacciones</h2>
+                                        </div>
+                                    </div>
+                                </div><!-- title -->
+                                
+                                <div class="row mt-3">
+                                    <div class="col-md-12">
+                                        <!-- DATA TABLE-->
+                                        <div class="table-responsive m-b-40">
+                                            <table class="table table-borderless table-data3">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Usuario</th>
+                                                        <th>Fecha</th>
+                                                        <th>Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="transactionsTable"></tbody>
+                                            </table>
+                                        </div>
+                                        <!-- END DATA TABLE-->
+                                    </div>
+                                </div>
+    
+                        </div>
+
+                    </div>
+                </div>
+            </div><!-- PAGE CONTAINER-->
+
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+            
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                <p id="modalContent"></p>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+            </div>
+
+        </div>
+
+        <!-- Bootstrap JS-->
+        <script src="../vendor/bootstrap-4.1/bootstrap.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+
+        <script src="../js/jquery-3.4.1.min.js"></script>
+        <script>
+            //--------------------------------
+            // $('div#mesas').addClass('d-none');
+            // $('div#transactions').removeClass('d-none');
+            //--------------------------------
+
+            /*
+            * Botones de navegación
+            */
+           
+            $('#liMenu').click(() => {
+                $('.container-element').addClass('d-none');
+                $("ul.list-unstyled.navbar__list li").removeClass('active');
+                $('li#liMenu').addClass('active');
+                $('div#menu').removeClass('d-none');
+            });
+
+            $('#liMesas').click(() => {
+                $('.container-element').addClass('d-none');
+                $("ul.list-unstyled.navbar__list li").removeClass('active');
+                $('li#liMesas').addClass('active');
+                $('div#mesas').removeClass('d-none');
+            });
+
+            $('#liUsuarios').click(() => {
+                $('.container-element').addClass('d-none');
+                $("ul.list-unstyled.navbar__list li").removeClass('active');
+                $('li#liUsuarios').addClass('active');
+                $('div#usuarios').removeClass('d-none');
+            });
+            
+            $('#liTrans').click(() => {
+                $('.container-element').addClass('d-none');
+                $("ul.list-unstyled.navbar__list li").removeClass('active');
+                $('li#liTrans').addClass('active');
+                $('div#transactions').removeClass('d-none');
+            });
+
+            let usrType = GLOBAL.getAccess();
+            
+            
+            if (usrType < 3 ){
+                $('#liTrans').addClass('d-none');
+                $('#option2').addClass('d-none');
+                $('#option3').addClass('d-none');
+            }
+
+            if (usrType == 1) {
+                $('#newPlatillo').addClass('d-none');
+                $('#liUsuarios').addClass('d-none');
+            }
+
+            /*
+            * Forms
+            */
+            Array.prototype.filter.call($('.needs-validation'), function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+
+            function submit(formID) {
+                let target = $('#' + formID);
+                data = target.serializeArray();
+
+                target.removeClass('was-validated');
+                switch (formID) {
+                    case 'productForm':
+                        GLOBAL.genProduct(data);
+                        break;
+                    
+                    case 'usersForm':
+                        GLOBAL.genUser(data);
+                        break;
+                
+                    default:
+                        alert(formID);
+                        break;
+                }
+            }
+
+            /*
+            * Mesas
+            */
+            //        (plate) 
+            function add(tableID) {
+                let plateID = $('#selectedPlate')[0].value; 
+
+                G.add(tableID, plateID);
+            }
+
+            function sell(tableID) {
+
+                G.sell(tableID);
+            }
+
+            /*
+            * Productos
+            */
+
+            function deleteProduct(id) {
+                
+                G.deleteP(id, (res) => {
+                    if (res) {
+                        showModal('Correcto', 'Producto eliminado');
+                    } else {
+                        showModal('Ups!', 'Ha ocurrido un error al borrar el producto');
+                    }
+                });
+            }
+
+            async function viewRecipe(name, id) {
+                showModal(name, await GLOBAL.getRecipe(id));
+            }
+
+            function clearP() {
+                for (let e of $('form#productForm input')) {
+                    e.value = '';
+                }
+
+                $('form#productForm textarea')[0].innerText = '';
+            }
+
+            function cancelP(t_id, p_id) {
+                GLOBAL.cancelPlate(t_id, p_id);
+            }
+
+            /*
+            * Usuarios
+            */
+
+            function deleteUser(id) {
+                G.deleteU(id, (res) => {
+                    if (res) {
+                        showModal('Correcto', 'Usuario eliminado con exito');
+                    } else {
+                        showModal('Ups!', 'Ha ocurrido un error');
+                    }
+                });
+            }
+
+            function clearUForm() {
+                for (let i of $('form#usersForm input')) {
+                    i.value = '';
+                }
+            }
+
+            function showModal(title, content) {
+                $('#modalTitle')[0].innerText = title;
+                $('#modalContent')[0].innerHTML = content;
+                $('#btnShowModal').click();
+            }
+
+        </script>
+    </body>
+
+</body>
+
+</html>

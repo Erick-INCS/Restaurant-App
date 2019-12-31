@@ -1,0 +1,17 @@
+{
+    "name": "elcresapp",
+    "version": "1.0.0",
+    "description": "Introducción a Electron, aplicacion de ventas de un restaurante",
+    "main": "app.js",
+    "scripts": {
+        "start": "electron app.js"
+    },
+    "author": "Erick Arroyo",
+    "license": "ISC",
+    "devDependencies": {
+        "electron": "^7.1.2"
+    },
+    "dependencies": {
+        "mysql": "^2.17.1"
+    }
+}
