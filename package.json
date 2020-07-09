@@ -9,7 +9,7 @@
     "author": "Erick Arroyo",
     "license": "ISC",
     "devDependencies": {
-        "electron": "^7.2.4"
+        "electron": ">=7.2.4"
     },
     "dependencies": {
         "mysql": "^2.17.1"
